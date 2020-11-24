@@ -8,6 +8,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public Transform cam;
 
     public float speed = 6f;
+    public float run = 1.5f;
     public float turnSmoothTime = 0.1f;
     public float jumpHeight = 3f;
     public float gravity = -9.81f;
@@ -23,6 +24,7 @@ public class ThirdPersonMovement : MonoBehaviour
     //float runMultiplyer = 1f;
     float angle;
     float targetAngle;
+    float runMultiplyer;
 
     // Update is called once per frame
     void Update()
@@ -32,6 +34,16 @@ public class ThirdPersonMovement : MonoBehaviour
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
+        }
+        if (Input.GetKey(KeyCode.LeftShift) && isGrounded)
+        {
+            runMultiplyer = run;
+            //_levelController.SprintFOV(true);
+            //Debug.Log("Gotta go fast! Run Multiplyer == " + runMultiplyer);
+        }
+        else
+        {
+            runMultiplyer = 1f;
         }
 
         float horizontal = Input.GetAxisRaw("Horizontal");  //between -1 and 1
@@ -45,7 +57,7 @@ public class ThirdPersonMovement : MonoBehaviour
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            controller.Move(moveDir.normalized * speed * Time.deltaTime);
+            controller.Move(moveDir.normalized * speed * runMultiplyer * Time.deltaTime);
         }
 
         //jump
