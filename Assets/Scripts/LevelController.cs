@@ -49,6 +49,12 @@ public class LevelController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /////ESC: Exit the program
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Debug.Log("Escape was pressed");
+            Application.Quit();
+        }
         //pause game if rune menu is open
         if (Input.GetKeyDown(KeyCode.Tab))
         {
